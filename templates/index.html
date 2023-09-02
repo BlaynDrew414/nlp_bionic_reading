@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bionic Reading Demo</title>
+    <!-- Include Bootstrap CSS from a CDN -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        /* Add CSS for centered gradient buttons with smaller size */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn-custom {
+            background: linear-gradient(to bottom, #4CAF50, #2196F3);
+            color: white;
+            border: none;
+            font-size: 80%; /* Reduce font size to make the button smaller */
+            padding: 10px 20px; /* Adjust padding as needed */
+            margin: 5px; /* Add margin to separate buttons */
+            border-radius: 5px; /* Add border radius */
+            width: 150px; /* Set a fixed width for all buttons */
+        }
+
+        .btn-custom:hover {
+            background: linear-gradient(to bottom, #45a049, #1e90ff);
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Bionic Reading Demo</h1>
+
+        <!-- Centered buttons with smaller size -->
+        <div class="btn-group" role="group">
+            {% for key, value in exampleTexts.items() %}
+            <button type="button" class="btn btn-custom" data-example="{{ key }}">{{ key }}</button>
+            {% endfor %}
+        </div>
+
+       
+
+        <div class="mt-4">
+            <h2>Input Text:</h2>
+            <textarea class="form-control" id="inputText" rows="4"></textarea>
+            <button type="button" class="btn btn-custom mt-2" id="emboldenButton">Bionize Text</button>
+        </div>
+
+        <div class="mt-4">
+            <h2>Bionic! - </h2>
+            <p class="lead" id="emboldenedText"></p>
+        </div>
+    </div>
+
+    <!-- Include Bootstrap JS and jQuery from a CDN -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            // Trigger a click event on Example 1 button to render it automatically
+            $(".btn-group .btn[data-example='Example 1: Improved Reading']").trigger('click');
+
+            $(".btn-group .btn").click(function () {
+                var exampleNumber = $(this).data('example');
+                $.ajax({
+                    url: "/embolden/" + exampleNumber,
+                    type: "GET",
+                    dataType: "json",
+                    success: function (data) {
+                        $("#emboldenedText").html(data.emboldenedText); // Update the emboldenedText paragraph
+                    }
+                });
+            });
+
+            $("#emboldenButton").click(function () {
+                var inputText = $("#inputText").val();
+                emboldenText(inputText); // Call emboldenText function
+            });
+
+            // Function to embolden the text
+            function emboldenText(text) {
+                $.ajax({
+                    url: "/embolden-text",
+                    type: "POST",
+                    dataType: "json",
+                    contentType: "application/json",
+                    data: JSON.stringify({ inputText: text }),
+                    success: function (data) {
+                        // Replace the emboldenedText paragraph with the emboldened text
+                        $("#emboldenedText").html(data.emboldenedText);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
