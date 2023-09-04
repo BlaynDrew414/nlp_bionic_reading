@@ -1,8 +1,14 @@
 # Bionic Reading Demo
 
+![Bionic Reading Demo Screenshot](images/Screenshot%20bionic%20reading%20demo.png)
+
+
 The **Bionic Reading Demo** is a web app that uses natural language processing AI to scan and convert text into bionic reading format. It improves text reading by highlighting initial letters of words, enhancing comprehension and reading speed. It provides sample text for testing and accepts custom text input.
 
 ## Usage
+
+![Bionic Reading Custom Input Demo Screenshot](images/Screenshot%20bionic%20reading%20custom%20input%20demo.png)
+
 
 - **Sample Texts**: Try Bionic Reading on predefined text examples.
 - **Custom Text Input**: Improve your own text by typing it and clicking "Bionize Text."
